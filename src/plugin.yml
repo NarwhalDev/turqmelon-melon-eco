@@ -1,0 +1,30 @@
+name: MelonEco
+author: Turqmelon
+version: 1.0
+main: com.turqmelon.MelonEco.MelonEco
+description: Economy plugin by Turqmelon that supports multiple currencies
+commands:
+  balance:
+    description: Shows your balances
+    usage: /balance (Player)
+    aliases: [bal, money, eco]
+  baltop:
+    description: Shows the top balances of the server
+    usage: /baltop (Currency) (Page)
+    aliases: [moneytop, ecotop]
+  currencies:
+    description: Manages server currencies
+    usage: /currencies
+    aliases: [meloneco, currency]
+  ecogive:
+    description: Gives currency to players
+    usage: /ecogive <Account> <Amount> (Currency)
+  ecoset:
+    description: Sets an account balance
+    usage: /ecoset <Account> <Amount> (Currency)
+  ecotake:
+    description: Takes from an account balance
+    usage: /ecotake <Account> <Amount> (Currency)
+  pay:
+    description: Pays another account
+    usage: /pay <Account> <Amount> (Currency)

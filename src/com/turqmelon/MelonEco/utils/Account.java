@@ -1,6 +1,8 @@
 package com.turqmelon.MelonEco.utils;
 
 import com.turqmelon.MelonEco.MelonEco;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +27,18 @@ public class Account {
     }
 
     public boolean withdraw(Currency currency, double amount){
+        return withdraw(currency, amount, false);
+    }
+
+    public boolean withdraw(Currency currency, double amount, boolean silent){
         if (getBalance(currency) >= amount){
             setBalance(currency, getBalance(currency)-amount);
+            if (!silent){
+                Player player = Bukkit.getPlayer(getUuid());
+                if (player!=null&&player.isOnline()){
+                    player.sendMessage("§c§l[Eco] §c-" + currency.format(amount));
+                }
+            }
             MelonEco.getDataStore().saveAccount(this);
             return true;
         }
@@ -34,8 +46,18 @@ public class Account {
     }
 
     public boolean deposit(Currency currency, double amount){
+        return deposit(currency, amount, false);
+    }
+
+    public boolean deposit(Currency currency, double amount, boolean silent){
         if (isCanReceiveCurrency()){
             setBalance(currency, getBalance(currency)+amount);
+            if (!silent){
+                Player player = Bukkit.getPlayer(getUuid());
+                if (player!=null&&player.isOnline()){
+                    player.sendMessage("§a§l[Eco] §a+" + currency.format(amount));
+                }
+            }
             MelonEco.getDataStore().saveAccount(this);
             return true;
         }

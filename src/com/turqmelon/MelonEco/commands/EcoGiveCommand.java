@@ -41,35 +41,11 @@ public class EcoGiveCommand implements CommandExecutor {
 
                 if (currency != null){
 
-                    double amount;
-
-                    if (currency.isDecimalSupported()){
-                        try {
-
-                            amount = Double.parseDouble(args[1]);
-                            if (amount <= 0){
-                                throw new NumberFormatException();
-                            }
-
-                        }catch(NumberFormatException ex){
-                            sender.sendMessage("§c§l[Eco] §cPlease provide a valid amount.");
-                            return;
-                        }
-                    }
-                    else{
-                        try {
-
-                            amount = Integer.parseInt(args[1]);
-                            if (amount <= 0){
-                                throw new NumberFormatException();
-                            }
-
-                        }catch(NumberFormatException ex){
-                            sender.sendMessage("§c§l[Eco] §cPlease provide a valid amount.");
-                            return;
-                        }
+                    if (!currency.validateInput(sender, args[1])) {
+                        return;
                     }
 
+                    double amount = Double.parseDouble(args[1]);
 
                     Account target  = AccountManager.getAccount(args[0]);
                     if (target != null){

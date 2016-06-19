@@ -11,7 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /******************************************************************************
@@ -103,7 +105,7 @@ public class YamlStorage extends DataStore {
     }
 
     @Override
-    public List<Account> getTopList(Currency currency, int offset, int amount) {
+    public Map<String, Double> getTopList(Currency currency, int offset, int amount) {
         return null;
     }
 

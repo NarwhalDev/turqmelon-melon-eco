@@ -6,7 +6,6 @@ package com.turqmelon.MelonEco.commands;
  ******************************************************************************/
 
 import com.turqmelon.MelonEco.MelonEco;
-import com.turqmelon.MelonEco.utils.Account;
 import com.turqmelon.MelonEco.utils.AccountManager;
 import com.turqmelon.MelonEco.utils.Currency;
 import org.bukkit.command.Command;
@@ -14,7 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
+import java.util.Map;
 
 public class BalTopCommand implements CommandExecutor {
 
@@ -61,11 +60,12 @@ public class BalTopCommand implements CommandExecutor {
                 if (currency != null){
 
 
-                    List<Account> toplist = MelonEco.getDataStore().getTopList(currency, offset, ACCOUNTS_PER_PAGE);
+                    Map<String, Double> toplist = MelonEco.getDataStore().getTopList(currency, offset, ACCOUNTS_PER_PAGE);
                     sender.sendMessage("§a§l[Eco] §f----- " + currency.getColor() + "Top " + currency.getSingular() + " Holders §7(Page " + page + ")§f -----");
                     int num = (10*(page-1))+1;
-                    for(Account account : toplist){
-                        sender.sendMessage("§a§l[Eco] §b§l" + num + ". " + currency.getColor() + account.getDisplayName() + "§7 - " + currency.getColor() + currency.format(account.getBalance(currency)));
+                    for (String name : toplist.keySet()) {
+                        double balance = toplist.get(name);
+                        sender.sendMessage("§a§l[Eco] §b§l" + num + ". " + currency.getColor() + name + "§7 - " + currency.getColor() + currency.format(balance));
                         num++;
                     }
                     if (toplist.isEmpty()){

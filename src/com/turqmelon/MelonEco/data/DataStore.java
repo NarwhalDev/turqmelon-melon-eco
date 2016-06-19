@@ -3,7 +3,7 @@ package com.turqmelon.MelonEco.data;
 import com.turqmelon.MelonEco.utils.Account;
 import com.turqmelon.MelonEco.utils.Currency;
 
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /******************************************************************************
@@ -27,7 +27,7 @@ public abstract class DataStore {
     public abstract void saveCurrency(Currency currency);
     public abstract void deleteCurrency(Currency currency);
 
-    public abstract List<Account> getTopList(Currency currency, int offset, int amount);
+    public abstract Map<String, Double> getTopList(Currency currency, int offset, int amount);
     public abstract Account loadAccount(String name);
     public abstract Account loadAccount(UUID uuid);
     public abstract void saveAccount(Account account);

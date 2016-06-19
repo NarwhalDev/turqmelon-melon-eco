@@ -2,6 +2,7 @@ package com.turqmelon.MelonEco.utils;
 
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 import java.text.NumberFormat;
 import java.util.UUID;
@@ -30,18 +31,6 @@ public class Currency {
         this.plural = plural;
     }
 
-    public void setSingular(String singular) {
-        this.singular = singular;
-    }
-
-    public void setPlural(String plural) {
-        this.plural = plural;
-    }
-
-    public void setDefaultBalance(double defaultBalance) {
-        this.defaultBalance = defaultBalance;
-    }
-
     public UUID getUuid() {
         return uuid;
     }
@@ -50,12 +39,54 @@ public class Currency {
         return singular;
     }
 
+    public void setSingular(String singular) {
+        this.singular = singular;
+    }
+
     public String getPlural() {
         return plural;
     }
 
+    public void setPlural(String plural) {
+        this.plural = plural;
+    }
+
     public double getDefaultBalance() {
         return defaultBalance;
+    }
+
+    public void setDefaultBalance(double defaultBalance) {
+        this.defaultBalance = defaultBalance;
+    }
+
+    public boolean validateInput(CommandSender sender, String input) {
+        double amount;
+        if (isDecimalSupported()) {
+            try {
+
+                amount = Double.parseDouble(input);
+                if (amount <= 0) {
+                    throw new NumberFormatException();
+                }
+
+            } catch (NumberFormatException ex) {
+                sender.sendMessage("§c§l[Eco] §cPlease provide a valid amount.");
+                return false;
+            }
+        } else {
+            try {
+
+                amount = Integer.parseInt(input);
+                if (amount <= 0) {
+                    throw new NumberFormatException();
+                }
+
+            } catch (NumberFormatException ex) {
+                sender.sendMessage("§c§l[Eco] §cPlease provide a valid amount.");
+                return false;
+            }
+        }
+        return true;
     }
 
     public String format(double amount){

@@ -63,6 +63,8 @@ public class AccountManager {
 
     public static Account getAccount(UUID uuid){
         for(Account account : getAccounts()){
+            if (uuid == null) return null;
+            if (account.getUuid() == null) continue;
             if (account.getUuid().equals(uuid)){
                 return account;
             }

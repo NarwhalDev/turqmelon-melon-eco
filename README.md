@@ -8,7 +8,7 @@ When working with clients, I found it easist to integrate MelonEco instead of tr
 
 1. Compile MelonEco against Java 8, making any changes you'd like
 2. Place **MelonEco.jar** in your plugins directory
-3. Run the server to generate your data file. (At the time of writing, MelonEco only supports YAML storage. SQL support is planned.)
+3. Run the server to generate your configuration file. MelonEco will default to saving eco data in a yml file called "data.yml". You can change this file, or provide your SQL information in the configuration.
 
 As players join your server, they'll be given an Account. An account is a profile that has an associated nickname and list of balances for any currencies you have.
 

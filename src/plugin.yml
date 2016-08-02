@@ -3,6 +3,7 @@ author: Turqmelon
 version: 1.0
 main: com.turqmelon.MelonEco.MelonEco
 description: Economy plugin by Turqmelon that supports multiple currencies
+softdepend: [RedisConnect]
 commands:
   balance:
     description: Shows your balances

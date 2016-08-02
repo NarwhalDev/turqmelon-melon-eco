@@ -26,12 +26,22 @@ public class Account {
         this.nickname = nickname;
     }
 
+    // If RedisConnect is in use, tells all instances of MelonEco to recache
+    // this account's data, if it's stored locally.
+    public void requireRecache() {
+        RedisManager redis = MelonEco.getInstance().getRedisManager();
+        if (redis != null) {
+            redis.sendRecacheRequest(this);
+        }
+    }
+
     public boolean withdraw(Currency currency, double amount){
         return withdraw(currency, amount, false);
     }
 
     public boolean withdraw(Currency currency, double amount, boolean silent){
         if (getBalance(currency) >= amount){
+            if (amount == 0) return false;
             setBalance(currency, getBalance(currency)-amount);
             if (!silent){
                 Player player = Bukkit.getPlayer(getUuid());
@@ -40,6 +50,7 @@ public class Account {
                 }
             }
             MelonEco.getDataStore().saveAccount(this);
+            requireRecache();
             return true;
         }
         return false;
@@ -51,6 +62,7 @@ public class Account {
 
     public boolean deposit(Currency currency, double amount, boolean silent){
         if (isCanReceiveCurrency()){
+            if (amount == 0) return false;
             setBalance(currency, getBalance(currency)+amount);
             if (!silent){
                 Player player = Bukkit.getPlayer(getUuid());
@@ -59,6 +71,7 @@ public class Account {
                 }
             }
             MelonEco.getDataStore().saveAccount(this);
+            requireRecache();
             return true;
         }
         return false;
@@ -68,12 +81,12 @@ public class Account {
         return getNickname() != null ? getNickname() : getUuid().toString();
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getNickname() {
         return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public UUID getUuid() {

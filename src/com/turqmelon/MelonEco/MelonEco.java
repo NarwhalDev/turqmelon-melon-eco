@@ -11,6 +11,8 @@ import com.turqmelon.MelonEco.data.DataStore;
 import com.turqmelon.MelonEco.data.MySQLStorage;
 import com.turqmelon.MelonEco.data.YamlStorage;
 import com.turqmelon.MelonEco.listeners.JoinListener;
+import com.turqmelon.MelonEco.utils.RedisManager;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -20,6 +22,7 @@ public class MelonEco extends JavaPlugin {
 
     private static DataStore dataStore = null;
     private static MelonEco instance;
+    private RedisManager redisManager = null;
 
     public static MelonEco getInstance() {
         return instance;
@@ -82,6 +85,16 @@ public class MelonEco extends JavaPlugin {
         getCommand("pay").setExecutor(new PayCommand());
         getCommand("currencies").setExecutor(new CurrencyCommand());
 
+        Plugin redisConnect = getServer().getPluginManager().getPlugin("RedisConnect");
+        if (getDataStore().getName().equalsIgnoreCase("mysql") && redisConnect != null && redisConnect.isEnabled()) {
+            getLogger().log(Level.INFO, "RedisConnect found! Hooking...");
+            this.redisManager = new RedisManager();
+        }
+
+    }
+
+    public RedisManager getRedisManager() {
+        return redisManager;
     }
 
     @Override

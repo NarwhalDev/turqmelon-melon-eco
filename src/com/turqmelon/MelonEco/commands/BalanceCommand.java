@@ -49,7 +49,7 @@ public class BalanceCommand implements CommandExecutor {
                         sender.sendMessage("§e§l[Eco] §e" + account.getDisplayName() + "'s balance: " + currency.getColor() + currency.format(balance));
                     }
                     else{
-                        sender.sendMessage("§e§l[Eco] §e" + account.getDisplayName() + "'s balance(s):");
+                        sender.sendMessage("§e§l[Eco] §e" + account.getDisplayName() + "'s balances:");
                         for(Currency currency : AccountManager.getCurrencies()){
                             double balance = account.getBalance(currency);
                             sender.sendMessage("§e§l[Eco]     " + currency.getColor() + currency.format(balance));

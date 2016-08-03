@@ -13,7 +13,7 @@ import java.util.UUID;
  ******************************************************************************/
 public class AccountManager {
 
-    private static List<Account> accounts = new ArrayList<>();
+    private static final List<Account> accounts = new ArrayList<>();
     private static List<Currency> currencies = new ArrayList<>();
 
     public static Currency getDefaultCurrency(){
@@ -62,14 +62,16 @@ public class AccountManager {
     }
 
     public static Account getAccount(UUID uuid){
-        for(Account account : getAccounts()){
-            if (uuid == null) return null;
-            if (account.getUuid() == null) continue;
-            if (account.getUuid().equals(uuid)){
-                return account;
+        synchronized (accounts) {
+            for (Account account : accounts) {
+                if (uuid == null) return null;
+                if (account.getUuid() == null) continue;
+                if (account.getUuid().equals(uuid)) {
+                    return account;
+                }
             }
+            return MelonEco.getDataStore().loadAccount(uuid);
         }
-        return MelonEco.getDataStore().loadAccount(uuid);
     }
 
     public static List<Account> getAccounts() {

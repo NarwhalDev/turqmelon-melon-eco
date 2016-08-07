@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -38,7 +39,7 @@ public class RedisManager {
 
         UUID accountID = UUID.fromString((String) args.get("accountid"));
         Account cachedAccount = null;
-        for (Account account : AccountManager.getAccounts()) {
+        for (Account account : new ArrayList<>(AccountManager.getAccounts())) {
             if (account.getUuid().equals(accountID)) {
                 cachedAccount = account;
                 break;

@@ -1,7 +1,6 @@
 package com.turqmelon.MelonEco.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,7 +13,7 @@ public class CachedTopList {
     private int amount;
     private int offset;
     private long cacheTime;
-    private Map<String, Double> results = new HashMap<>();
+    private LinkedHashMap<String, Double> results = new LinkedHashMap<>();
 
     public CachedTopList(Currency currency, int amount, int offset, long cacheTime) {
         this.currency = currency;
@@ -47,11 +46,11 @@ public class CachedTopList {
         return cacheTime;
     }
 
-    public Map<String, Double> getResults() {
+    public LinkedHashMap<String, Double> getResults() {
         return results;
     }
 
-    public void setResults(Map<String, Double> results) {
+    public void setResults(LinkedHashMap<String, Double> results) {
         this.results = results;
     }
 }

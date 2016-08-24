@@ -4,8 +4,6 @@ import com.archeinteractive.rc.RedisConnect;
 import com.archeinteractive.rc.redis.pubsub.NetTask;
 import com.archeinteractive.rc.redis.pubsub.NetTaskSubscribe;
 import com.turqmelon.MelonEco.MelonEco;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -59,12 +57,6 @@ public class RedisManager {
                     Account account = AccountManager.getAccount(accountID);
                     if (account != null && !AccountManager.getAccounts().contains(account)) {
                         AccountManager.getAccounts().add(account);
-                    }
-
-                    // If a player matches the account ID and they're online, inform them of the change
-                    Player player = Bukkit.getPlayer(accountID);
-                    if (player != null && player.isOnline()) {
-                        player.sendMessage("§e§l[Eco] §eYour balance(s) were updated from another server.");
                     }
                 }
             }.runTaskAsynchronously(MelonEco.getInstance());

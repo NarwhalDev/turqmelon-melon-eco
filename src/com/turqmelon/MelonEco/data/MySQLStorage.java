@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -193,7 +194,7 @@ public class MySQLStorage extends DataStore {
     }
 
     @Override
-    public Map<String, Double> getTopList(Currency currency, int offset, int amount) {
+    public LinkedHashMap<String, Double> getTopList(Currency currency, int offset, int amount) {
 
         if (cachedTopList.containsKey(currency.getUuid())) {
             CachedTopList ctl = cachedTopList.get(currency.getUuid());
@@ -205,11 +206,11 @@ public class MySQLStorage extends DataStore {
         if (getConnection() == null) return null;
         reviveConnection();
 
-        Map<String, Double> resultPair = new HashMap<>();
+        LinkedHashMap<String, Double> resultPair = new LinkedHashMap<>();
 
         try {
 
-            Map<String, Double> idBalancePair = new HashMap<>();
+            LinkedHashMap<String, Double> idBalancePair = new LinkedHashMap<>();
 
             PreparedStatement stmt = getConnection().prepareStatement("SELECT * FROM " + getTablePrefix() + "_balances WHERE currency_id = ? ORDER BY balance DESC LIMIT " + offset + ", " + amount);
             stmt.setString(1, currency.getUuid().toString());

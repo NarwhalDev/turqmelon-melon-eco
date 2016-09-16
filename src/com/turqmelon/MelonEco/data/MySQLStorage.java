@@ -39,7 +39,7 @@ public class MySQLStorage extends DataStore {
 
     private void reviveConnection() {
         try {
-            if (!getConnection().isValid(3)) {
+            if (getConnection().isClosed() || !getConnection().isValid(3)) {
                 initalize();
             }
         } catch (SQLException e) {

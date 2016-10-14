@@ -6,9 +6,11 @@ package com.turqmelon.MelonEco.commands;
  ******************************************************************************/
 
 import com.turqmelon.MelonEco.MelonEco;
+import com.turqmelon.MelonEco.api.AccountPayAccountEvent;
 import com.turqmelon.MelonEco.utils.Account;
 import com.turqmelon.MelonEco.utils.AccountManager;
 import com.turqmelon.MelonEco.utils.Currency;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -68,6 +70,18 @@ public class PayCommand implements CommandExecutor {
 
                         Account target  = AccountManager.getAccount(args[0]);
                         if (target != null){
+
+                            AccountPayAccountEvent event = new AccountPayAccountEvent(account, target, currency, amount);
+                            Bukkit.getPluginManager().callEvent(event);
+
+                            if (event.isCancelled()) {
+                                return;
+                            }
+
+                            account = event.getSender();
+                            target = event.getRecipient();
+                            currency = event.getCurrency();
+                            amount = event.getAmount();
 
                             if (target.isCanReceiveCurrency()){
 

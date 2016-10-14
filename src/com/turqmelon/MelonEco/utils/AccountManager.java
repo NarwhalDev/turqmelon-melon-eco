@@ -1,6 +1,8 @@
 package com.turqmelon.MelonEco.utils;
 
 import com.turqmelon.MelonEco.MelonEco;
+import com.turqmelon.MelonEco.api.AccountLoadedEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -58,7 +60,10 @@ public class AccountManager {
                 return account;
             }
         }
-        return MelonEco.getDataStore().loadAccount(name);
+
+        Account account = MelonEco.getDataStore().loadAccount(name);
+        Bukkit.getPluginManager().callEvent(new AccountLoadedEvent(account));
+        return account;
     }
 
     public static Account getAccount(UUID uuid) {
@@ -69,7 +74,9 @@ public class AccountManager {
                 return account;
             }
         }
-        return MelonEco.getDataStore().loadAccount(uuid);
+        Account account = MelonEco.getDataStore().loadAccount(uuid);
+        Bukkit.getPluginManager().callEvent(new AccountLoadedEvent(account));
+        return account;
     }
 
     public static List<Account> getAccounts() {

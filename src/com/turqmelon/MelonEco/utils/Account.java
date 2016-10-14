@@ -1,6 +1,7 @@
 package com.turqmelon.MelonEco.utils;
 
 import com.turqmelon.MelonEco.MelonEco;
+import com.turqmelon.MelonEco.api.AccountBalanceChangedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -51,6 +52,8 @@ public class Account {
             }
             MelonEco.getDataStore().saveAccount(this);
             requireRecache();
+
+            Bukkit.getPluginManager().callEvent(new AccountBalanceChangedEvent(this, AccountBalanceChangedEvent.AccountAction.WITHDRAW, currency, amount));
             return true;
         }
         return false;
@@ -72,6 +75,8 @@ public class Account {
             }
             MelonEco.getDataStore().saveAccount(this);
             requireRecache();
+
+            Bukkit.getPluginManager().callEvent(new AccountBalanceChangedEvent(this, AccountBalanceChangedEvent.AccountAction.DEPOSIT, currency, amount));
             return true;
         }
         return false;
